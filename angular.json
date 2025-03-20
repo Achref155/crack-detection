@@ -25,9 +25,14 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/assets/css/plugins.css",
+              "src/assets/css/styles.css"
             ],
-            "scripts": []
+            "scripts": [  "node_modules/sweetalert2/dist/sweetalert2.all.min.js"
+          ],
+            "baseHref": "/crack-detect/"
+
           },
           "configurations": {
             "production": {
