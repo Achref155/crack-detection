@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+      <!-- Breadcrumbs -->
+      <div class="bredcrumb_wrap">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Proposals</li>
+            </ol>
+          </nav>	
+      </div>
+  </div>
+</div>
+
+<div class="user-proposals">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Proposal ID</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Submitted By</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let proposal of proposals">
+          <td>{{ proposal.id }}</td>
+          <td>{{ proposal.title }}</td>
+          <td>{{ proposal.description }}</td>
+          <td>{{ proposal.userName }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
