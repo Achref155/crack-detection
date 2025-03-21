@@ -4,12 +4,15 @@ const User = require('../models/user.model');
 
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find({}, { _id: 1, firstname: 1, lastname: 1, email: 1 })
+    // Fetch users but exclude those with role 'admin'
+    const users = await User.find({ role: { $ne: 'admin' } }, { _id: 1, firstname: 1, lastname: 1, email: 1 })
                            .lean()
                            .exec();
+    
     const usersWithId = users.map(user => {
       return { ...user, id: user._id };
     });
+
     res.json(usersWithId);
   } catch (error) {
     res.status(500).send('Server error');
