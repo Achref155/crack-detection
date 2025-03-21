@@ -24,6 +24,7 @@ export const routes: Routes = [
 
     { path: 'admin', canActivate: [ authGuard ], data: { requiresAdmin: true }, loadComponent : ()=>import('./pages/admin/admin.component').then( c=>c.AdminComponent ) , children: [
         { path: '', loadComponent: () => import('./pages/admin/admin-dashboard/admin-dashboard.component').then(c => c.AdminDashboardComponent) },
+        { path: 'profile' , loadComponent : ()=>import('./pages/admin/profile/profile.component').then( c=>c.ProfileComponent ) },
         { path: 'users', loadComponent: () => import('./pages/admin/user-management/user-management.component').then(c => c.UserManagementComponent) },
         { path: 'user-proposals', loadComponent: () => import('./pages/admin/user-proposals/user-proposals.component').then(c => c.UserProposalsComponent) },
         { path: 'ai-training', loadComponent: () => import('./pages/admin/ai-training/ai-training.component').then(c => c.AiTrainingComponent) },

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
-import { AdminService } from '../../core/services/admin.service';
+import { UserService } from '../../core/services/user.service';
 
 @Component({
   selector: 'app-admin',
@@ -11,18 +11,20 @@ import { AdminService } from '../../core/services/admin.service';
 })
 export class AdminComponent {
 
-  adminData: any;
+  user: any;
 
-  constructor(private router: Router, private _adminService: AdminService) {}
+
+  constructor( private router: Router , private _user: UserService ){}
+
 
   ngOnInit(): void {
-    this._adminService.getAdminDetails().subscribe({
-      next: adminData => {
-        console.log('Admin data loaded', adminData);
-        this.adminData = adminData;      
-      },
-      error: err => console.error('Error fetching admin data', err)
-    });
+    
+    this._user.getUserById( this._user.getUserIdFromToken() ).subscribe({
+      next: (res)=>{
+        this.user = res;
+      }
+    })
+
   }
 
   logout() {

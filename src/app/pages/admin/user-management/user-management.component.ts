@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../../core/services/admin.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user-management',
@@ -12,7 +14,7 @@ export class UserManagementComponent implements OnInit {
 
   users: any[] = [];
 
-  constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadUsers();
@@ -44,12 +46,37 @@ export class UserManagementComponent implements OnInit {
       console.error('No valid user ID found. Skipping operation.');
       return;
     }
-    this.adminService.removeUser(userId).subscribe({
-      next: () => {
-        console.log('User removed successfully');
-        this.loadUsers();
-      },
-      error: err => console.error('Error removing user', err)
+
+    // Show SweetAlert2 confirmation dialog
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This action will permanently delete the user!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.adminService.removeUser(userId).subscribe({
+          next: () => {
+            Swal.fire(
+              'Deleted!',
+              'User has been deleted successfully.',
+              'success'
+            );
+            this.router.navigate(['/admin/users']); // Navigate to /admin/users after deletion
+            this.loadUsers();
+          },
+          error: err => {
+            Swal.fire(
+              'Error!',
+              'Failed to delete user. Please try again.',
+              'error'
+            );
+            console.error('Error removing user', err)
+          }
+        });
+      }
     });
   }
 }
